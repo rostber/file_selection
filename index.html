@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+
+    <meta charset="utf-8">
+    <title>HTML5 file selection</title>
+
+    <style type="text/css">
+body {
+  padding: 20px;
+}
+.highlight {
+  background-color: blue;
+  border-style: solid;
+  color: #fff;
+}
+#textarea {
+  display: block;
+  width: 100%;
+  height: 100px;
+  margin: 20px 0;
+}
+#drop {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed gray;
+  transition: all linear 0.2s;
+  margin: 20px 0;
+}
+#debug {
+  display: block;
+  height: 100px;
+  border: 1px solid gray;
+  background-color: #eee;
+  transition: all linear 0.2s;
+  margin: 20px 0;
+}
+    </style>
+
+    <script type="text/javascript" src="file_selection.js">//</script>
+
+  </head>
+<body>
+
+  <h1>HTML5 file selection</h1>
+
+  <p>Click:</p>
+  <input type="file" id="file" />
+
+  <p>Paste:</p>
+  <textarea id="textarea" placeholder="Ctrl+V/Cmd+V file"></textarea>
+
+  <p>Drag and drop:</p>
+  <div id="drop">Drag and drop</div>
+
+  <p>Callback:</p>
+  <div id="debug"></div>
+
+  <script type="text/javascript">
+
+new FileSelection({
+  maxFileSizeLimitMb: 10,
+  elInputFile: document.getElementById('file'),
+  elInputTextarea: document.getElementById('textarea'),
+  elDropZone: document.getElementById('drop'),
+  classDropZomeHighlight: 'highlight',
+  handleFileSelect: (file) => {
+    console.log('Selected', file);
+    document.getElementById('debug').innerHTML = `Selected: ${file.name} ${file.size} bytes`;
+  },
+  handleFileSelectSizeLimit: (file) => {
+    console.log('Error file size', file.size);
+    document.getElementById('debug').innerHTML = `Error file size: ${file.name} ${file.size} bytes`;
+  }
+});
+
+  </script>
+
+</body>
+</html>
